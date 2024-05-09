@@ -25,8 +25,8 @@ public class SectorController {
     List<SectorDto> sectorDtoList = sectorService.readSectorList().stream()
         .map(sectorMapper::toDto)
         .collect(Collectors.toList());
-    ReadSectorListResponse response = new ReadSectorListResponse(sectorDtoList);
-    return CommonResponse.success(response);
+    ReadSectorListResponse data = new ReadSectorListResponse(sectorDtoList);
+    return CommonResponse.success(data);
   }
 
 }
