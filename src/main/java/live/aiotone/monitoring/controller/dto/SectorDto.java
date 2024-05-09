@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class SectorDto {
 
-  private final String sectorId;
+  private final Long sectorId;
   private final String sectorName;
 
 }
