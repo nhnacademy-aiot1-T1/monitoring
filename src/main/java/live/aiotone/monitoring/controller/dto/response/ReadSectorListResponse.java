@@ -1,4 +1,4 @@
-package live.aiotone.monitoring.controller.response;
+package live.aiotone.monitoring.controller.dto.response;
 
 import java.util.List;
 import live.aiotone.monitoring.controller.dto.SectorDto;

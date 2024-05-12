@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import live.aiotone.monitoring.controller.dto.SectorDto;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
-import live.aiotone.monitoring.controller.response.ReadSectorListResponse;
+import live.aiotone.monitoring.controller.dto.response.ReadSectorListResponse;
 import live.aiotone.monitoring.service.SectorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
