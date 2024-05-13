@@ -24,6 +24,7 @@ public class DbCleaner{
         .collect(Collectors.toList());
   }
 
+  @SuppressWarnings("SqlNoDataSourceInspection")
   @Transactional
   public void databaseClean() {
     entityManager.flush();
