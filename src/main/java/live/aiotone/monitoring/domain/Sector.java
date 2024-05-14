@@ -37,4 +37,8 @@ public class Sector {
   public static Sector createByName(String sectorName) {
     return new Sector(null, sectorName);
   }
+
+    public void updateName(String sectorName) {
+        this.sectorName = sectorName;
+    }
 }
