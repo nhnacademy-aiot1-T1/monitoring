@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Sector Domain Entity.
+*/
 @Table(name = "sector")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +27,14 @@ public class Sector {
 
   @Column(name = "sector_name", nullable = false)
   private String sectorName;
+
+  /**
+  *  Sector 이름으로 Sector 객체를 생성하는 메서드.
+   *
+   * @param sectorName Sector 이름
+   * @return Sector
+  */
+  public static Sector createByName(String sectorName) {
+    return new Sector(null, sectorName);
+  }
 }
