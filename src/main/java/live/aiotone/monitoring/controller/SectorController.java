@@ -6,14 +6,11 @@ import java.util.stream.Collectors;
 import live.aiotone.monitoring.controller.dto.SectorDto;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
+import live.aiotone.monitoring.controller.dto.request.UpdateSectorNameRequest;
 import live.aiotone.monitoring.controller.dto.response.ReadSectorListResponse;
 import live.aiotone.monitoring.service.SectorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
 * Sector Controller.
@@ -50,6 +47,13 @@ public class SectorController {
   public CommonResponse<SectorDto> createSector(@RequestBody CreateSectorRequest createSectorRequest) {
     String sectorName = createSectorRequest.getSectorName();
     SectorDto sectorDto = sectorMapper.toDto(sectorService.createSector(sectorName));
+    return CommonResponse.success(sectorDto);
+  }
+
+  @PutMapping("/{sectorId}")
+  public CommonResponse<SectorDto> updateSectorName(@PathVariable Long sectorId, @RequestBody UpdateSectorNameRequest updateSectorNameRequest) {
+    String sectorName = updateSectorNameRequest.getSectorName();
+    SectorDto sectorDto = sectorMapper.toDto(sectorService.updateSectorName(sectorId, sectorName));
     return CommonResponse.success(sectorDto);
   }
 

@@ -11,4 +11,6 @@ public interface SectorService {
   List<Sector> readSectorList();
 
   Sector createSector(String sectorName);
+
+  Sector updateSectorName(Long sectorId, String sectorName);
 }

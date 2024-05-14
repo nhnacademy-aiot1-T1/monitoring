@@ -1,7 +1,6 @@
 package live.aiotone.monitoring.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -81,4 +80,34 @@ class SectorControllerTest extends IntegrationTest {
               jsonPath("data.sectorName").value("sector1"));
     }
   }
+
+    @Nested
+    class Sector_수정 {
+
+        URI updateUri = sectorUriBuilder
+            .pathSegment("{sectorId}")
+            .build(1);
+
+        @BeforeEach
+        void setUp() {
+          sectorSetup.insertSectorList();
+        }
+
+        @Test
+        void sector를_수정한다() throws Exception {
+          CreateSectorRequest createSectorRequest = new CreateSectorRequest("sector1");
+          mockMvc.perform(put(updateUri)
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(
+                      objectMapper.writeValueAsString(createSectorRequest))
+              )
+              .andDo(print())
+              .andExpectAll(
+                  status().isOk(),
+                  jsonPath("status").value("success"),
+                  jsonPath("data.sectorId").isNumber(),
+                  jsonPath("data.sectorName").value("sector1"));
+        }
+
+    }
 }

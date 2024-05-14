@@ -29,4 +29,11 @@ public class SectorServiceImpl implements SectorService {
     Sector sector = Sector.createByName(sectorName);
     return sectorRepository.save(sector);
   }
+
+  @Override
+  public Sector updateSectorName(Long sectorId, String sectorName) {
+    Sector sector = sectorRepository.findById(sectorId).orElse(null);
+    sector.updateName(sectorName);
+    return sector;
+  }
 }
