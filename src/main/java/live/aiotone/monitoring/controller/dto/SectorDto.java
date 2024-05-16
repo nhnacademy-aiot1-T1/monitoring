@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * Sector DTO.
+ */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
