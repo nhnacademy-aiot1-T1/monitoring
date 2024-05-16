@@ -2,7 +2,6 @@ package live.aiotone.monitoring.controller;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import live.aiotone.monitoring.controller.dto.SectorDto;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
@@ -38,10 +37,8 @@ public class SectorController {
    */
   @GetMapping
   public CommonResponse<ReadSectorListResponse> readSectorList() {
-    List<SectorDto> sectorDtoList = sectorService.readSectorList().stream()
-        .map(sectorMapper::toDto)
-        .collect(Collectors.toList());
-    ReadSectorListResponse data = new ReadSectorListResponse(sectorDtoList);
+    List<SectorDto> sectorDtoList = sectorMapper.toDtoList(sectorService.readSectorList());
+    ReadSectorListResponse data = ReadSectorListResponse.of(sectorDtoList);
     return CommonResponse.success(data);
   }
 
