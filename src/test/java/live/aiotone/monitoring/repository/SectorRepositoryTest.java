@@ -36,8 +36,13 @@ public class SectorRepositoryTest {
         @Test
         void sector_save(){
             // given
-            Sector sector = new Sector(null, "sector1");
-            Sector expectedSector = new Sector(1L, "sector1");
+            Sector sector = Sector.builder()
+                .sectorName("sector1")
+                .build();
+
+            Sector expectedSector = Sector.builder().id(1L)
+                .sectorName("sector1")
+                .build();
 
             // when
             Sector savedSector = sectorRepository.save(sector);

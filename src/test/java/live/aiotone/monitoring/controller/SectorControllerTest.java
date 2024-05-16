@@ -3,6 +3,7 @@ package live.aiotone.monitoring.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -137,5 +139,54 @@ class SectorControllerTest extends IntegrationTestBase {
           .andExpect(status().isNotFound())
           .andExpect(jsonPath("status").value("fail"));
     }
+  }
+
+  @Nested
+  class Sector_수정 {
+
+
+    @BeforeEach
+    void setUp() {
+      sectorSetup.insertSectorList();
+    }
+
+    @Test
+    void sector를_수정한다() throws Exception {
+      URI updateUri = sectorUriBuilder
+          .pathSegment("{sectorId}")
+          .build(1);
+
+      CreateSectorRequest createSectorRequest = new CreateSectorRequest("sector1");
+      mockMvc.perform(put(updateUri)
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(
+                  objectMapper.writeValueAsString(createSectorRequest))
+          )
+          .andDo(print())
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("status").value("success"))
+          .andExpect(jsonPath("data.sectorId").isNumber())
+          .andExpect(jsonPath("data.sectorName").value("sector1"));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"-1,sector1", "10,sector2"}, delimiter = ',')
+    void 존재하지_않는_sector_수정요청을_보내면_상태코드_404을_반환한다(Long sectorId, String sectorName)
+        throws Exception {
+      CreateSectorRequest createSectorRequest = new CreateSectorRequest(sectorName);
+      URI updateUri = sectorUriBuilder
+          .pathSegment("{sectorId}")
+          .build(sectorId);
+
+      mockMvc.perform(put(updateUri)
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(
+                  objectMapper.writeValueAsString(createSectorRequest))
+          )
+          .andDo(print())
+          .andExpect(status().isNotFound())
+          .andExpect(jsonPath("status").value("fail"));
+    }
+
   }
 }

@@ -2,11 +2,11 @@ package live.aiotone.monitoring.controller;
 
 import com.nhnacademy.common.dto.CommonResponse;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import live.aiotone.monitoring.controller.dto.SectorDto;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
+import live.aiotone.monitoring.controller.dto.request.UpdateSectorNameRequest;
 import live.aiotone.monitoring.controller.dto.response.ReadSectorListResponse;
 import live.aiotone.monitoring.service.SectorService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,10 +37,8 @@ public class SectorController {
    */
   @GetMapping
   public CommonResponse<ReadSectorListResponse> readSectorList() {
-    List<SectorDto> sectorDtoList = sectorService.readSectorList().stream()
-        .map(sectorMapper::toDto)
-        .collect(Collectors.toList());
-    ReadSectorListResponse data = new ReadSectorListResponse(sectorDtoList);
+    List<SectorDto> sectorDtoList = sectorMapper.toDtoList(sectorService.readSectorList());
+    ReadSectorListResponse data = ReadSectorListResponse.of(sectorDtoList);
     return CommonResponse.success(data);
   }
 
@@ -56,6 +55,22 @@ public class SectorController {
     SectorDto sectorDto = sectorMapper.toDto(sectorService.createSector(sectorName));
     return CommonResponse.success(sectorDto);
   }
+
+  /**
+   * Sector 이름 변경 요청 핸들러 메서드.
+   *
+   * @param sectorId                Sector ID
+   * @param updateSectorNameRequest Sector 이름 변경 요청
+   * @return 변경된 Sector
+   */
+  @PutMapping("/{sectorId}")
+  public CommonResponse<SectorDto> updateSectorName(@PathVariable Long sectorId,
+      @RequestBody @Valid UpdateSectorNameRequest updateSectorNameRequest) {
+    String sectorName = updateSectorNameRequest.getSectorName();
+    SectorDto sectorDto = sectorMapper.toDto(sectorService.updateSectorName(sectorId, sectorName));
+    return CommonResponse.success(sectorDto);
+  }
+
 
   /**
    * Sector 삭제 요청 처리 핸들러 메서드.
