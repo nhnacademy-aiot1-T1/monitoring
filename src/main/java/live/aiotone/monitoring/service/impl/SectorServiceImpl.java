@@ -38,4 +38,12 @@ public class SectorServiceImpl implements SectorService {
     }
     sectorRepository.deleteById(sectorId);
   }
+
+  @Override
+  public Sector updateSectorName(Long sectorId, String sectorName) {
+    Sector sector = sectorRepository.findById(sectorId)
+        .orElseThrow(() -> new SectorNotFoundException(sectorId));
+    sector.updateName(sectorName);
+    return sector;
+  }
 }

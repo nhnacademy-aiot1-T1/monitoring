@@ -25,10 +25,20 @@ public interface SectorService {
   Sector createSector(String sectorName);
 
   /**
+   * Sector 의 이름을 수정.
+   *
+   * @param sectorId   수정할 Sector ID
+   * @param sectorName 수정할 Sector 이름
+   * @return 수정된 Sector
+   * @throws SectorNotFoundException Sector 가 존재하지 않을 경우
+   */
+  Sector updateSectorName(Long sectorId, String sectorName);
+
+  /**
    * Sector Id 로 Sector 삭제.
    *
    * @param sectorId Sector ID
-   * @throws SectorNotFoundException  Sector 가 존재하지 않을 경우
+   * @throws SectorNotFoundException Sector 가 존재하지 않을 경우
    */
   void deleteSectorById(Long sectorId);
 }

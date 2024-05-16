@@ -11,8 +11,11 @@ import live.aiotone.monitoring.controller.dto.request.UpdateSectorNameRequest;
 import live.aiotone.monitoring.controller.dto.response.ReadSectorListResponse;
 import live.aiotone.monitoring.service.SectorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,12 +59,21 @@ public class SectorController {
     return CommonResponse.success(sectorDto);
   }
 
+  /**
+   * Sector 이름 변경 요청 핸들러 메서드.
+   *
+   * @param sectorId                Sector ID
+   * @param updateSectorNameRequest Sector 이름 변경 요청
+   * @return 변경된 Sector
+   */
   @PutMapping("/{sectorId}")
-  public CommonResponse<SectorDto> updateSectorName(@PathVariable Long sectorId, @RequestBody UpdateSectorNameRequest updateSectorNameRequest) {
+  public CommonResponse<SectorDto> updateSectorName(@PathVariable Long sectorId,
+      @RequestBody @Valid UpdateSectorNameRequest updateSectorNameRequest) {
     String sectorName = updateSectorNameRequest.getSectorName();
     SectorDto sectorDto = sectorMapper.toDto(sectorService.updateSectorName(sectorId, sectorName));
     return CommonResponse.success(sectorDto);
   }
+
 
   /**
    * Sector 삭제 요청 처리 핸들러 메서드.
