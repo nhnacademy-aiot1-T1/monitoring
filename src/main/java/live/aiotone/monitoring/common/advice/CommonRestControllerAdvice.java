@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * 공통 예외 처리 클래스.
  */
 @RestControllerAdvice
-public class CommonAdvice {
+public class CommonRestControllerAdvice {
 
   /**
    * 비즈니스 로직에서 발생하는 예외 처리.
