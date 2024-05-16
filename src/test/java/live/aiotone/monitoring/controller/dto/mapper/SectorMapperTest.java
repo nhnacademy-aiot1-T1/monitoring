@@ -1,7 +1,7 @@
 package live.aiotone.monitoring.controller.dto.mapper;
 
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import live.aiotone.monitoring.controller.dto.SectorDto;
 import live.aiotone.monitoring.domain.Sector;
@@ -22,7 +22,10 @@ class SectorMapperTest {
         .sectorName(expectedName)
         .build();
 
-    Sector sector = new Sector(1L, "sector1");
+    Sector sector = Sector.builder()
+        .id(1L)
+        .sectorName("sector1")
+        .build();
     // when
     SectorDto actual = sectorMapper.toDto(sector);
     // then

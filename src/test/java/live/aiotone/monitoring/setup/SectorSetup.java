@@ -18,7 +18,7 @@ public class SectorSetup {
   public void insertSectorList() {
     List<String> sectorNameList = List.of("sector1", "sector2", "sector3", "sector4");
     List<Sector> sectorList = sectorNameList.stream()
-        .map(name -> new Sector(null, name))
+        .map(Sector::createByName)
         .collect(Collectors.toList());
     sectorRepository.saveAll(sectorList);
   }
