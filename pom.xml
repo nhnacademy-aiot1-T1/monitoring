@@ -138,7 +138,6 @@
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 		<jacoco.version>0.8.8</jacoco.version>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.language>java</sonar.language>
 	</properties>
