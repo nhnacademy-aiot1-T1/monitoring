@@ -6,16 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
  * Sector Domain Entity.
-*/
+ */
 @Table(name = "sector")
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class Sector {
@@ -29,16 +32,22 @@ public class Sector {
   private String sectorName;
 
   /**
-  *  Sector 이름으로 Sector 객체를 생성하는 메서드.
+   * Sector 이름으로 Sector 객체를 생성하는 메서드.
    *
    * @param sectorName Sector 이름
    * @return Sector
-  */
+   */
   public static Sector createByName(String sectorName) {
     return new Sector(null, sectorName);
   }
 
-    public void updateName(String sectorName) {
-        this.sectorName = sectorName;
-    }
+  /**
+   * Sector 이름을 수정하는 메서드.
+   *
+   * @param sectorName Sector 이름
+   */
+  public void updateName(String sectorName) {
+    this.sectorName = sectorName;
+  }
+
 }
