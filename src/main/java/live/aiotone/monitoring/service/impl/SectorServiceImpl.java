@@ -1,6 +1,7 @@
 package live.aiotone.monitoring.service.impl;
 
 import java.util.List;
+import live.aiotone.monitoring.common.exception.sector.SectorNotFoundException;
 import live.aiotone.monitoring.domain.Sector;
 import live.aiotone.monitoring.repository.SectorRepository;
 import live.aiotone.monitoring.service.SectorService;
@@ -28,5 +29,13 @@ public class SectorServiceImpl implements SectorService {
   public Sector createSector(String sectorName) {
     Sector sector = Sector.createByName(sectorName);
     return sectorRepository.save(sector);
+  }
+
+  @Override
+  public void deleteSectorById(Long sectorId) {
+    if (!sectorRepository.existsById(sectorId)) {
+      throw new SectorNotFoundException(sectorId);
+    }
+    sectorRepository.deleteById(sectorId);
   }
 }
