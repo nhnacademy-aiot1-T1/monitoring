@@ -30,7 +30,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class MotorControllerTest {
 
-  private final String path = "/api/monitor/motors";
+  String path = "/api/monitor/motors";
+
   @Autowired
   ObjectMapper objectMapper;
   @Autowired
