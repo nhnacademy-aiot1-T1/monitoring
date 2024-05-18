@@ -8,9 +8,10 @@ import lombok.Getter;
 /**
  * Sector DTO.
  */
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SectorDto {
 
   private final Long sectorId;
