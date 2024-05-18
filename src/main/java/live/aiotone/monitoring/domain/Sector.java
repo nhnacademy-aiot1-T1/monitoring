@@ -15,12 +15,13 @@ import lombok.NoArgsConstructor;
 /**
  * Sector Domain Entity.
  */
+
+@Entity
 @Table(name = "sector")
 @Builder
+@Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Entity
 public class Sector {
 
   @Id
