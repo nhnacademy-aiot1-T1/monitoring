@@ -11,7 +11,7 @@ import live.aiotone.monitoring.controller.dto.mapper.MotorMapperImpl;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapperImpl;
 import live.aiotone.monitoring.domain.Motor;
-import live.aiotone.monitoring.domain.Sector;
+import live.aiotone.monitoring.factory.TestFixtureFactory;
 import live.aiotone.monitoring.service.MotorService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -50,11 +50,8 @@ public class MotorControllerTest {
 
     @Test
     void 모터_목록_조회_성공_시_200_반환() throws Exception {
-
+      Motor motor = TestFixtureFactory.createMotor();
       // given
-      Motor motor = Motor.builder().id(1L).motorName("motor").on(true).deviceName("device")
-          .sector(Sector.builder().id(1L).sectorName("sector1").build())
-          .build();
 
       List<Motor> motors = List.of(motor);
 
