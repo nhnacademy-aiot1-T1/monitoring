@@ -4,7 +4,7 @@ import live.aiotone.monitoring.domain.Sector;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
-* Sector Repository.
+ * Sector Entity Repository.
 */
 public interface SectorRepository extends JpaRepository<Sector, Long> {
 }
