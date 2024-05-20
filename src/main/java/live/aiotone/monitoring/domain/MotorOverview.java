@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Builder
 @RequiredArgsConstructor
-public class FactoryOverview {
+public class MotorOverview {
 
   /**
    * 총 모터 개수.
@@ -36,7 +36,7 @@ public class FactoryOverview {
    * @param motorList 모터 리스트
    * @return FactoryOverview
    */
-  public static FactoryOverview createOverview(List<Motor> motorList) {
+  public static MotorOverview createOverview(List<Motor> motorList) {
     int totalMotorCount = motorList.size();
     int totalOnMotorCount = 0;
     int totalNormalMotorCount = 0;
@@ -50,7 +50,7 @@ public class FactoryOverview {
       }
     }
 
-    return FactoryOverview.builder()
+    return MotorOverview.builder()
         .totalMotorCount(totalMotorCount)
         .totalOnMotorCount(totalOnMotorCount)
         .totalNormalMotorCount(totalNormalMotorCount)
