@@ -1,7 +1,6 @@
 package live.aiotone.monitoring.service.impl;
 
 import java.util.List;
-import live.aiotone.monitoring.domain.FactoryOverview;
 import live.aiotone.monitoring.domain.Motor;
 import live.aiotone.monitoring.repository.MotorRepository;
 import live.aiotone.monitoring.service.MotorService;
@@ -22,11 +21,5 @@ public class MotorServiceImpl implements MotorService {
   @Override
   public List<Motor> readMotorList() {
     return motorRepository.findAll();
-  }
-
-  @Override
-  public FactoryOverview readFactoryOverview() {
-    List<Motor> motorList = motorRepository.findAll();
-    return FactoryOverview.createOverview(motorList);
   }
 }
