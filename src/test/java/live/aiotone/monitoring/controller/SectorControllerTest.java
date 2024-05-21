@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Stream;
 import live.aiotone.monitoring.common.exception.sector.SectorNotFoundException;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapperImpl;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
@@ -118,9 +117,6 @@ class SectorControllerTest {
   @Nested
   class Sector_삭제 {
 
-    Stream<String> sectorIdProvider() {
-      return Stream.of("1", "2");
-    }
 
     @ParameterizedTest
     @ValueSource(strings = {"1", "2"})
