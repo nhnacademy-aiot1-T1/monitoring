@@ -12,12 +12,14 @@ import java.util.List;
 import live.aiotone.monitoring.base.ServiceTestBase;
 import live.aiotone.monitoring.common.exception.sector.SectorNotFoundException;
 import live.aiotone.monitoring.domain.Sector;
+import live.aiotone.monitoring.factory.TestFixtureFactory;
 import live.aiotone.monitoring.repository.SectorRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+@SuppressWarnings("NonAsciiCharacters")
 class SectorServiceImplTest extends ServiceTestBase {
 
   @InjectMocks
@@ -78,6 +80,22 @@ class SectorServiceImplTest extends ServiceTestBase {
       // then
       assertThatThrownBy(() -> sectorService.deleteSectorById(sectorId))
           .isInstanceOf(SectorNotFoundException.class);
+    }
+  }
+
+  @Nested
+  class Sector_개요_조회 {
+
+    @Test
+    void sectorRepository에서_모든_sector를_조회해서_SectorOverView로_변환해서_반환() {
+      // given
+      when(sectorRepository.findAllWithMotors()).thenReturn(
+          List.of(TestFixtureFactory.createSectorWithMotor(),
+              TestFixtureFactory.createSectorWithMotor()));
+      // when
+      sectorService.readSectorOverviewList();
+      // then
+      verify(sectorRepository, times(1)).findAllWithMotors();
     }
   }
 }
