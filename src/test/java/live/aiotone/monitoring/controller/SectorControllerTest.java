@@ -20,6 +20,7 @@ import live.aiotone.monitoring.controller.dto.mapper.SectorMapperImpl;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
 import live.aiotone.monitoring.controller.dto.request.UpdateSectorNameRequest;
 import live.aiotone.monitoring.domain.Sector;
+import live.aiotone.monitoring.domain.SectorOverView;
 import live.aiotone.monitoring.factory.TestFixtureFactory;
 import live.aiotone.monitoring.service.SectorService;
 import org.junit.jupiter.api.BeforeEach;
@@ -205,16 +206,21 @@ class SectorControllerTest {
 
     @Test
     void sector_개요를_조회한다() throws Exception {
-      when(sectorService.readSectorOverviewList()).thenReturn(
-          List.of(TestFixtureFactory.createSectorOverView(),
-              TestFixtureFactory.createSectorOverView())
-      );
+      SectorOverView overView1 = TestFixtureFactory.createSectorOverView();
+      SectorOverView overView2 = TestFixtureFactory.createSectorOverView();
+      when(sectorService.readSectorOverviewList())
+          .thenReturn(List.of(overView1, overView2));
 
       mockMvc.perform(get(path + "/overview"))
           .andDo(print())
           .andExpect(status().isOk())
           .andExpect(jsonPath("status").value("success"))
-          .andExpect(jsonPath("data.sectors").isArray());
+          .andExpect(jsonPath("data.sectors").isArray())
+          .andExpect(jsonPath("data.sectors[0].sectorId").value(overView1.getSectorId()))
+          .andExpect(jsonPath("data.sectors[0].sectorName").value(overView1.getSectorName()))
+          .andExpect(jsonPath("data.sectors[0].totalCount").value(overView1.getTotalCount()))
+          .andExpect(jsonPath("data.sectors[0].normalCount").value(overView1.getNormalCount()))
+          .andExpect(jsonPath("data.sectors[0].isOnCount").value(overView1.getIsOnCount()));
     }
   }
 }

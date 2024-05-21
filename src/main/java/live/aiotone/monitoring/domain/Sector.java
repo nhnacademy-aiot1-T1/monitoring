@@ -44,7 +44,9 @@ public class Sector {
    * @return Sector
    */
   public static Sector createByName(String sectorName) {
-    return new Sector(null, sectorName, null);
+    return Sector.builder()
+        .sectorName(sectorName)
+        .build();
   }
 
   /**
