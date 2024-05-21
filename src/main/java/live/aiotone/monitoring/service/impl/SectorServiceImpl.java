@@ -42,7 +42,7 @@ public class SectorServiceImpl implements SectorService {
 
   @Override
   public List<SectorOverView> readSectorOverviewList() {
-    List<Sector> sectors = sectorRepository.findAll();
+    List<Sector> sectors = sectorRepository.findAllWithMotors();
     return SectorOverView.fromSectorList(sectors);
   }
 
