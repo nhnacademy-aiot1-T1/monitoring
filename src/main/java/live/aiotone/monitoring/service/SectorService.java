@@ -3,6 +3,7 @@ package live.aiotone.monitoring.service;
 import java.util.List;
 import live.aiotone.monitoring.common.exception.sector.SectorNotFoundException;
 import live.aiotone.monitoring.domain.Sector;
+import live.aiotone.monitoring.domain.SectorOverView;
 
 /**
  * Sector 관련 비즈니스 로직을 처리하는 서비스 인터페이스.
@@ -41,4 +42,12 @@ public interface SectorService {
    * @throws SectorNotFoundException Sector 가 존재하지 않을 경우
    */
   void deleteSectorById(Long sectorId);
+
+
+  /**
+   * SectorOverView 목록 조회.
+   *
+   * @return SectorOverView 목록
+   */
+  List<SectorOverView> readSectorOverviewList();
 }

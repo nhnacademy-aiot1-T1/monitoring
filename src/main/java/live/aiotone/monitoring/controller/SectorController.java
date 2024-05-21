@@ -8,6 +8,8 @@ import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
 import live.aiotone.monitoring.controller.dto.request.UpdateSectorNameRequest;
 import live.aiotone.monitoring.controller.dto.response.ReadSectorListResponse;
+import live.aiotone.monitoring.controller.dto.response.SectorOverviewResponse;
+import live.aiotone.monitoring.domain.SectorOverView;
 import live.aiotone.monitoring.service.SectorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -82,6 +84,17 @@ public class SectorController {
   public CommonResponse<Void> deleteSector(@PathVariable Long sectorId) {
     sectorService.deleteSectorById(sectorId);
     return CommonResponse.success(null, "Sector가 삭제되었습니다.");
+  }
+
+  /**
+   * Sector 개요 조회 요청 핸들러 메서드.
+   *
+   * @return Sector 개요 조회
+   */
+  @GetMapping("/overview")
+  public CommonResponse<SectorOverviewResponse> readSectorOverviewList() {
+    List<SectorOverView> sectorOverViewList = sectorService.readSectorOverviewList();
+    return CommonResponse.success(SectorOverviewResponse.of(sectorOverViewList));
   }
 
 }

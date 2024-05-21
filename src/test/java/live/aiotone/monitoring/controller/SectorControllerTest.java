@@ -15,12 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Stream;
 import live.aiotone.monitoring.common.exception.sector.SectorNotFoundException;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapperImpl;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
 import live.aiotone.monitoring.controller.dto.request.UpdateSectorNameRequest;
 import live.aiotone.monitoring.domain.Sector;
+import live.aiotone.monitoring.domain.SectorOverView;
+import live.aiotone.monitoring.factory.TestFixtureFactory;
 import live.aiotone.monitoring.service.SectorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -41,6 +42,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @WebMvcTest(SectorController.class)
 @Import({SectorMapperImpl.class})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 class SectorControllerTest {
 
   private final String path = "/api/monitor/sectors";
@@ -81,7 +83,6 @@ class SectorControllerTest {
   class Sector_생성 {
 
 
-
     @Test
     void sector를_생성한다() throws Exception {
       CreateSectorRequest createSectorRequest = new CreateSectorRequest("sector1");
@@ -117,9 +118,6 @@ class SectorControllerTest {
   @Nested
   class Sector_삭제 {
 
-    Stream<String> sectorIdProvider() {
-      return Stream.of("1", "2");
-    }
 
     @ParameterizedTest
     @ValueSource(strings = {"1", "2"})
@@ -201,6 +199,28 @@ class SectorControllerTest {
           .andExpect(status().isNotFound())
           .andExpect(jsonPath("status").value("fail"));
     }
+  }
 
+  @Nested
+  class Sector_개요 {
+
+    @Test
+    void sector_개요를_조회한다() throws Exception {
+      SectorOverView overView1 = TestFixtureFactory.createSectorOverView();
+      SectorOverView overView2 = TestFixtureFactory.createSectorOverView();
+      when(sectorService.readSectorOverviewList())
+          .thenReturn(List.of(overView1, overView2));
+
+      mockMvc.perform(get(path + "/overview"))
+          .andDo(print())
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("status").value("success"))
+          .andExpect(jsonPath("data.sectors").isArray())
+          .andExpect(jsonPath("data.sectors[0].sectorId").value(overView1.getSectorId()))
+          .andExpect(jsonPath("data.sectors[0].sectorName").value(overView1.getSectorName()))
+          .andExpect(jsonPath("data.sectors[0].totalCount").value(overView1.getTotalCount()))
+          .andExpect(jsonPath("data.sectors[0].normalCount").value(overView1.getNormalCount()))
+          .andExpect(jsonPath("data.sectors[0].isOnCount").value(overView1.getIsOnCount()));
+    }
   }
 }

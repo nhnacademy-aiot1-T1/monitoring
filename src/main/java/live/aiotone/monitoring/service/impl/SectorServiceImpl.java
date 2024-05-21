@@ -3,6 +3,7 @@ package live.aiotone.monitoring.service.impl;
 import java.util.List;
 import live.aiotone.monitoring.common.exception.sector.SectorNotFoundException;
 import live.aiotone.monitoring.domain.Sector;
+import live.aiotone.monitoring.domain.SectorOverView;
 import live.aiotone.monitoring.repository.SectorRepository;
 import live.aiotone.monitoring.service.SectorService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,12 @@ public class SectorServiceImpl implements SectorService {
       throw new SectorNotFoundException(sectorId);
     }
     sectorRepository.deleteById(sectorId);
+  }
+
+  @Override
+  public List<SectorOverView> readSectorOverviewList() {
+    List<Sector> sectors = sectorRepository.findAllWithMotors();
+    return SectorOverView.fromSectorList(sectors);
   }
 
   @Override
