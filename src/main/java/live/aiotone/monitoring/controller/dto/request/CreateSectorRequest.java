@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 * Sector 생성 요청 DTO.
 */
 @Getter
-@RequiredArgsConstructor(onConstructor = @__(@JsonCreator))
+@RequiredArgsConstructor(onConstructor_ = @JsonCreator)
 public final class CreateSectorRequest {
 
   @NotBlank(message = "sectorName은 비어있을 수 없습니다.")
