@@ -48,9 +48,9 @@ public class MotorRunningLog {
   @Getter
   public enum Duration {
 
-    DAY("%Y-%m-%dT%H:00:00", 24),
-    WEEK("%Y-%m-%dT00:00:00", 168),
-    MONTH("%Y-%m", 720);
+    DAY("%Y-%m-%d %H:00:00", 24),
+    WEEK("%Y-%m-%d 00:00:00", 168),
+    MONTH("%Y-%m-%d 00:00:00", 720);
     final String format;
     final int hours;
 
