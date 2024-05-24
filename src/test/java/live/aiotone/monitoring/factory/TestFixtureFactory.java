@@ -10,11 +10,21 @@ public class TestFixtureFactory {
   static Long motorId = 0L;
   static Long sectorId = 0L;
 
-  public static Motor createMotor() {
+  public static Motor createMotorWithSector() {
     motorId++;
     return Motor.builder()
         .id(motorId)
         .sector(createSector())
+        .deviceName("deviceName" + motorId)
+        .motorName("motorName" + motorId)
+        .on(true)
+        .normal(true)
+        .build();
+  }
+
+  public static Motor createMotor() {
+    motorId++;
+    return Motor.builder()
         .deviceName("deviceName" + motorId)
         .motorName("motorName" + motorId)
         .on(true)
@@ -47,7 +57,7 @@ public class TestFixtureFactory {
     return Sector.builder()
         .id(sectorId)
         .sectorName("sectorName" + sectorId)
-        .motors(List.of(createMotor(), createMotor()))
+        .motors(List.of(createMotorWithSector(), createMotorWithSector()))
         .build();
   }
 

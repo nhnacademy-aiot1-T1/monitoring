@@ -36,6 +36,12 @@ public class MotorServiceImpl implements MotorService {
     return motorRunningLogRepository.readMotorRunningRate(currentTime, duration);
   }
 
+  @Override
+  public List<MotorRunningRateDto> readMotorRunningRateById(Long motorId, Duration duration) {
+    LocalDateTime currentTime = LocalDateTime.now(clockHolder.getClock());
+    return motorRunningLogRepository.readMotorRunningRateById(motorId, currentTime, duration);
+  }
+
 }
 
 

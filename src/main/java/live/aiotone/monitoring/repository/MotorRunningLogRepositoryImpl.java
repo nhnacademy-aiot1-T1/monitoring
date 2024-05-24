@@ -47,6 +47,29 @@ public class MotorRunningLogRepositoryImpl extends QuerydslRepositorySupport
         .fetch();
   }
 
+  @Override
+  public List<MotorRunningRateDto> readMotorRunningRateById(Long motorId, LocalDateTime currentTime,
+      Duration duration) {
+
+    final String dateFormat = duration.getFormat();
+    final int durationHours = duration.getHours();
+
+    StringExpression formattedDate = dateFormatExpression(qMotorRunningLog.createdAt, dateFormat);
+    LocalDateTime startTime = currentTime.minusHours(durationHours);
+
+    return from(qMotorRunningLog)
+        .select(
+            new QMotorRunningRateDto(
+                formattedDate,
+                runningRateExpression())
+        )
+        .where(qMotorRunningLog.createdAt.after(startTime)
+            .and(qMotorRunningLog.motor.id.eq(motorId)))
+        .groupBy(formattedDate)
+        .orderBy(formattedDate.asc())
+        .fetch();
+  }
+
 
   private StringExpression dateFormatExpression(DateTimePath<LocalDateTime> dateTimePath,
       String format) {

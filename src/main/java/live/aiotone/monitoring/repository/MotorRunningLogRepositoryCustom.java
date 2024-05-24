@@ -13,4 +13,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface MotorRunningLogRepositoryCustom {
 
   List<MotorRunningRateDto> readMotorRunningRate(LocalDateTime currentTime, Duration duration);
+
+  List<MotorRunningRateDto> readMotorRunningRateById(Long motorId, LocalDateTime currentTime,
+      Duration duration);
 }

@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @WebMvcTest(MotorController.class)
 @Import({MotorMapperImpl.class, SectorMapperImpl.class})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 public class MotorControllerTest {
 
   String path = "/api/monitor/motors";
@@ -51,7 +52,7 @@ public class MotorControllerTest {
 
     @Test
     void 모터_목록_조회_성공_시_200_반환() throws Exception {
-      Motor motor = TestFixtureFactory.createMotor();
+      Motor motor = TestFixtureFactory.createMotorWithSector();
       // given
 
       List<Motor> motors = List.of(motor);

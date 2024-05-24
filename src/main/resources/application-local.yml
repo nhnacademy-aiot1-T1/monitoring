@@ -16,18 +16,6 @@ spring:
         generate_statistics: true
     show-sql: true
 
-
 eureka:
   client:
     enabled: false
-
-
-
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
-    root: info

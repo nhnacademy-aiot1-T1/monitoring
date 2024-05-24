@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+    <encoder>
+      <pattern>
+        ${DEFAULT_LOG_PATTERN}
+      </pattern>
+    </encoder>
+  </appender>
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="BUSINESS_LOG">
+    <encoder>
+      <pattern>
+        ${BUSINESS_LOG_PATTERN}
+      </pattern>
+    </encoder>
+  </appender>
+  <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FILE_LOG">
+    <encoder>
+      <charset>utf8</charset>
+      <Pattern>${DEFAULT_LOG_PATTERN}</Pattern>
+    </encoder>
+    <file>./${LOG_PATH}/monitoring-api.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>./${LOG_PATH}/monitoring-api-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy
+        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+      <maxHistory>180</maxHistory>
+    </rollingPolicy>
+  </appender>
+  <property name="LOG_PATH" value="./logs"/>
+  <property name="LOG_DATE_FORMAT" value="%d{yyyy-MM-dd HH:mm:ss.SSS}"/>
+  <property name="LOG_LEVEL" value="%highlight([%-5level])"/>
+
+  <property name="THREAD_NAME" value="[%15.15t]"/>
+  <property name="LOGGER_NAME" value="%cyan([%35.35logger{0}])"/>
+
+  <property name="LOG_MESSAGE" value=" : %m%n"/>
+  <property name="BUSINESS_LOG_PATTERN"
+    value="%boldGreen(${LOG_DATE_FORMAT}) ${THREAD_NAME} ${LOG_LEVEL} ${LOGGER_NAME} %boldGreen(${LOG_MESSAGE})"/>
+
+  <property name="DEFAULT_LOG_PATTERN"
+    value="${LOG_DATE_FORMAT} ${THREAD_NAME} ${LOG_LEVEL} ${LOGGER_NAME} ${LOG_MESSAGE}"/>
+
+  <springProfile name="prod">
+    <root level="INFO">
+      <appender-ref ref="STDOUT"/>
+      <appender-ref ref="FILE_LOG"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="local">
+    <logger additivity="false" name="live.aiotone.monitoring.common.aop.LogAspect">
+      <appender-ref ref="BUSINESS_LOG"/>
+      <level value="DEBUG"/>
+    </logger>
+    <logger additivity="false" name="org.hibernate.type.descriptor.sql">
+      <level value="TRACE"/>
+      <appender-ref ref="STDOUT"/>
+    </logger>
+    <root level="DEBUG">
+      <appender-ref ref="STDOUT"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="dev">
+    <logger additivity="false" name="live.aiotone.monitoring.common.aop.LogAspect">
+      <appender-ref ref="BUSINESS_LOG"/>
+      <level value="DEBUG"/>
+    </logger>
+    <root level="DEBUG">
+      <appender-ref ref="STDOUT"/>
+    </root>
+    <logger additivity="false" name="org.hibernate.type.descriptor.sql">
+      <appender-ref ref="STDOUT"/>
+      <level value="TRACE"/>
+    </logger>
+  </springProfile>
+</configuration>
