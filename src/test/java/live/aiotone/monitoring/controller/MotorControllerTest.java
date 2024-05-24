@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @WebMvcTest(MotorController.class)
 @Import({MotorMapperImpl.class, SectorMapperImpl.class})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 public class MotorControllerTest {
 
   String path = "/api/monitor/motors";
