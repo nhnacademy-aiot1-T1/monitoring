@@ -4,11 +4,14 @@ import com.nhnacademy.common.dto.CommonResponse;
 import java.util.List;
 import live.aiotone.monitoring.controller.dto.MotorDto;
 import live.aiotone.monitoring.controller.dto.mapper.MotorMapper;
+import live.aiotone.monitoring.controller.dto.response.MotorRunningRateResponse;
 import live.aiotone.monitoring.controller.dto.response.ReadMotorListResponse;
+import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
 import live.aiotone.monitoring.service.MotorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 

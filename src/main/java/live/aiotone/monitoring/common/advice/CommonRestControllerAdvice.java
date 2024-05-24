@@ -4,6 +4,7 @@ import com.nhnacademy.common.dto.CommonResponse;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import live.aiotone.monitoring.common.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * 공통 예외 처리 클래스.
  */
 @RestControllerAdvice
+@Slf4j
 public class CommonRestControllerAdvice {
 
   /**
@@ -30,6 +32,7 @@ public class CommonRestControllerAdvice {
     int httpStatus = e.getHttpStatus().value();
     String message = e.getMessage();
     response.setStatus(httpStatus);
+    log.error("BusinessException: {}", message);
     return CommonResponse.fail(message);
   }
 
