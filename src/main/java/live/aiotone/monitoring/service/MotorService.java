@@ -25,4 +25,12 @@ public interface MotorService {
    */
   List<MotorRunningRateDto> readMotorRunningRate(Duration duration);
 
+  /**
+   * 개별 모터 가동률 조회.
+   *
+   * @param motorId  가동률을 조회할 모터 아이디
+   * @param duration 조회 기간
+   * @return 모터 가동률.
+   */
+  List<MotorRunningRateDto> readMotorRunningRateById(Long motorId, Duration duration);
 }
