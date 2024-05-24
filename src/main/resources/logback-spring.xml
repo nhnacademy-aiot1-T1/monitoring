@@ -16,17 +16,17 @@
   </appender>
   <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FILE_LOG">
     <encoder>
-      <Pattern>${DEFAULT_LOG_PATTERN}</Pattern>
       <charset>utf8</charset>
+      <Pattern>${DEFAULT_LOG_PATTERN}</Pattern>
     </encoder>
     <file>./${LOG_PATH}/monitoring-api.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>./${LOG_PATH}/monitoring-api-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-      <maxHistory>180</maxHistory>
       <timeBasedFileNamingAndTriggeringPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <maxFileSize>10MB</maxFileSize>
       </timeBasedFileNamingAndTriggeringPolicy>
+      <maxHistory>180</maxHistory>
     </rollingPolicy>
   </appender>
   <property name="LOG_PATH" value="./logs"/>
@@ -56,8 +56,8 @@
       <level value="DEBUG"/>
     </logger>
     <logger additivity="false" name="org.hibernate.type.descriptor.sql">
-      <appender-ref ref="STDOUT"/>
       <level value="TRACE"/>
+      <appender-ref ref="STDOUT"/>
     </logger>
     <root level="DEBUG">
       <appender-ref ref="STDOUT"/>
@@ -69,12 +69,12 @@
       <appender-ref ref="BUSINESS_LOG"/>
       <level value="DEBUG"/>
     </logger>
+    <root level="DEBUG">
+      <appender-ref ref="STDOUT"/>
+    </root>
     <logger additivity="false" name="org.hibernate.type.descriptor.sql">
       <appender-ref ref="STDOUT"/>
       <level value="TRACE"/>
     </logger>
-    <root level="DEBUG">
-      <appender-ref ref="STDOUT"/>
-    </root>
   </springProfile>
 </configuration>

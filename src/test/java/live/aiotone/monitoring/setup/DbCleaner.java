@@ -35,7 +35,7 @@ public class DbCleaner{
   public void databaseClean() {
     entityManager.flush();
     // fk 제약 비활성화
-    entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
+    entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
     for (String tableName : tableNames) {
       // 테이블 초기화
       entityManager.createNativeQuery("TRUNCATE TABLE " + tableName).executeUpdate();
@@ -44,6 +44,6 @@ public class DbCleaner{
           .executeUpdate();
     }
     // fk 제약 활성화
-    entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
+    entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
   }
 }

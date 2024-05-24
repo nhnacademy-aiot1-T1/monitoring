@@ -9,10 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import live.aiotone.monitoring.base.IntegrationTestBase;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
-import live.aiotone.monitoring.setup.SectorSetup;
+import live.aiotone.monitoring.domain.Sector;
+import live.aiotone.monitoring.repository.SectorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -31,8 +34,9 @@ class SectorIntegrationTest extends IntegrationTestBase {
       .host("localhost")
       .port(port)
       .path("/api/monitor/sectors");
+
   @Autowired
-  SectorSetup sectorSetup;
+  SectorRepository sectorRepository;
 
   @Nested
   class Sector_조회 {
@@ -44,7 +48,11 @@ class SectorIntegrationTest extends IntegrationTestBase {
 
     @BeforeEach
     void setUp() {
-      sectorSetup.insertSectorList();
+      List<String> sectorNameList = List.of("sector1", "sector2", "sector3", "sector4");
+      List<Sector> sectorList = sectorNameList.stream()
+          .map(Sector::createByName)
+          .collect(Collectors.toList());
+      sectorRepository.saveAll(sectorList);
     }
 
     @Test
@@ -99,10 +107,13 @@ class SectorIntegrationTest extends IntegrationTestBase {
 
   @Nested
   class Sector_삭제 {
-
     @BeforeEach
     void setUp() {
-      sectorSetup.insertSectorList();
+      List<String> sectorNameList = List.of("sector1", "sector2", "sector3", "sector4");
+      List<Sector> sectorList = sectorNameList.stream()
+          .map(Sector::createByName)
+          .collect(Collectors.toList());
+      sectorRepository.saveAll(sectorList);
     }
 
     Stream<String> sectorIdProvider() {
@@ -143,10 +154,13 @@ class SectorIntegrationTest extends IntegrationTestBase {
   @Nested
   class Sector_수정 {
 
-
     @BeforeEach
     void setUp() {
-      sectorSetup.insertSectorList();
+      List<String> sectorNameList = List.of("sector1", "sector2", "sector3", "sector4");
+      List<Sector> sectorList = sectorNameList.stream()
+          .map(Sector::createByName)
+          .collect(Collectors.toList());
+      sectorRepository.saveAll(sectorList);
     }
 
     @Test
