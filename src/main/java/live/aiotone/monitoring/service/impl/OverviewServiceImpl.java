@@ -8,6 +8,9 @@ import live.aiotone.monitoring.service.OverviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Overview Service 구현체.
+ */
 @Service
 @RequiredArgsConstructor
 public class OverviewServiceImpl implements OverviewService {
