@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+  <property name="LOG_PATH" value="./logs"/>
+  <property name="LOG_DATE_FORMAT" value="%d{yyyy-MM-dd HH:mm:ss.SSS}"/>
+  <property name="LOG_LEVEL" value="%highlight([%-5level])"/>
+
+  <property name="THREAD_NAME" value="[%15.15t]"/>
+  <property name="LOGGER_NAME" value="%cyan([%35.35logger{0}])"/>
+
+  <property name="LOG_MESSAGE" value=" : %m%n"/>
+  <property name="BUSINESS_LOG_PATTERN"
+    value="%boldGreen(${LOG_DATE_FORMAT}) ${THREAD_NAME} ${LOG_LEVEL} ${LOGGER_NAME} %boldGreen(${LOG_MESSAGE})"/>
+  <property name="DEFAULT_LOG_PATTERN"
+    value="${LOG_DATE_FORMAT} ${THREAD_NAME} ${LOG_LEVEL} ${LOGGER_NAME} ${LOG_MESSAGE}"/>
+
   <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
     <encoder>
       <pattern>
@@ -29,19 +42,7 @@
       <maxHistory>180</maxHistory>
     </rollingPolicy>
   </appender>
-  <property name="LOG_PATH" value="./logs"/>
-  <property name="LOG_DATE_FORMAT" value="%d{yyyy-MM-dd HH:mm:ss.SSS}"/>
-  <property name="LOG_LEVEL" value="%highlight([%-5level])"/>
 
-  <property name="THREAD_NAME" value="[%15.15t]"/>
-  <property name="LOGGER_NAME" value="%cyan([%35.35logger{0}])"/>
-
-  <property name="LOG_MESSAGE" value=" : %m%n"/>
-  <property name="BUSINESS_LOG_PATTERN"
-    value="%boldGreen(${LOG_DATE_FORMAT}) ${THREAD_NAME} ${LOG_LEVEL} ${LOGGER_NAME} %boldGreen(${LOG_MESSAGE})"/>
-
-  <property name="DEFAULT_LOG_PATTERN"
-    value="${LOG_DATE_FORMAT} ${THREAD_NAME} ${LOG_LEVEL} ${LOGGER_NAME} ${LOG_MESSAGE}"/>
 
   <springProfile name="prod">
     <root level="INFO">
