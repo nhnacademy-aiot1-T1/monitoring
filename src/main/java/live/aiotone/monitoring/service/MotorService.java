@@ -2,6 +2,7 @@ package live.aiotone.monitoring.service;
 
 import java.util.List;
 import live.aiotone.monitoring.controller.dto.MotorRunningRateDto;
+import live.aiotone.monitoring.controller.dto.response.MotorDetailResponse;
 import live.aiotone.monitoring.domain.Motor;
 import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
 
@@ -33,4 +34,6 @@ public interface MotorService {
    * @return 모터 가동률.
    */
   List<MotorRunningRateDto> readMotorRunningRateById(Long motorId, Duration duration);
+
+  MotorDetailResponse getMotorDetail(Long motorId);
 }
