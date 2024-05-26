@@ -3,32 +3,26 @@ package live.aiotone.monitoring.domain;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Factory Overview 도메인 클래스.
  */
 @Getter
 @Builder
-@RequiredArgsConstructor
 public class MotorOverview {
 
   /**
    * 총 모터 개수.
    */
-  @NonNull
-  private final Integer totalMotorCount;
+  private final int totalMotorCount;
   /**
    * 가동 중인 모터 개수.
    */
-  @NonNull
-  private final Integer totalOnMotorCount;
+  private final int totalOnMotorCount;
   /**
    * 정상 작동 중인 모터 개수.
    */
-  @NonNull
-  private final Integer totalNormalMotorCount;
+  private final int totalNormalMotorCount;
 
   /**
    * 모터 리스트를 받아서 FactoryOverview 객체를 생성합니다.
