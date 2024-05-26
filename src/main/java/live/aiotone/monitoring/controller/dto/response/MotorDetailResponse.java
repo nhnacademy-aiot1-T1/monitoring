@@ -18,7 +18,8 @@ public class MotorDetailResponse {
   private final String sectorName;
   @JsonProperty("isOn")
   private final boolean on;
-  private final String status;
+  @JsonProperty("isNormal")
+  private final boolean normal;
   private final List<MotorDetailResponse.Sensor> sensors;
 
   /**
