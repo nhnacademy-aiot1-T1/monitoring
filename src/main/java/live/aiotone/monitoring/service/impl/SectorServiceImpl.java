@@ -41,6 +41,7 @@ public class SectorServiceImpl implements SectorService {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<SectorOverView> readSectorOverviewList() {
     List<Sector> sectors = sectorRepository.findAllWithMotors();
     return SectorOverView.fromSectorList(sectors);

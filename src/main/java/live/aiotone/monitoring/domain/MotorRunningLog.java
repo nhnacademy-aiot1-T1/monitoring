@@ -14,14 +14,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * 모터의 가동률.
  */
 @Getter
 @Entity
-@ToString(exclude = "motor")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "motor_running_log")
 @AllArgsConstructor(access = AccessLevel.PRIVATE, onConstructor_ = @QueryProjection)

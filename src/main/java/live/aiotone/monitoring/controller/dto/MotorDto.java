@@ -1,8 +1,6 @@
 package live.aiotone.monitoring.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +9,6 @@ import lombok.Getter;
  */
 @Getter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MotorDto {
 
   private final Long motorId;

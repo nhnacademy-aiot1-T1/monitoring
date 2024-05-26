@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * MotorService 구현체.
  */
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MotorServiceImpl implements MotorService {
 
