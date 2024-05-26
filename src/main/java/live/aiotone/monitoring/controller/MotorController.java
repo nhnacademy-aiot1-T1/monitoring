@@ -6,6 +6,7 @@ import java.util.List;
 import live.aiotone.monitoring.controller.dto.MotorDto;
 import live.aiotone.monitoring.controller.dto.mapper.MotorMapper;
 import live.aiotone.monitoring.controller.dto.mapper.SensorScoreMapper;
+import live.aiotone.monitoring.controller.dto.response.MotorDetailResponse;
 import live.aiotone.monitoring.controller.dto.response.MotorListResponse;
 import live.aiotone.monitoring.controller.dto.response.MotorRunningRateResponse;
 import live.aiotone.monitoring.controller.dto.response.SensorScoresResponse;
@@ -103,5 +104,11 @@ public class MotorController {
         .sensorId(sensorId)
         .scores(sesorScoreDtoList)
         .build());
+  }
+
+  @GetMapping("/{motorId}")
+  public CommonResponse<MotorDetailResponse> readMotorDetail(@PathVariable Long motorId) {
+    MotorDetailResponse motorDetail = motorService.getMotorDetail(motorId);
+    return CommonResponse.success(motorDetail);
   }
 }
