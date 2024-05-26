@@ -7,7 +7,7 @@ import live.aiotone.monitoring.controller.dto.SectorDto;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
 import live.aiotone.monitoring.controller.dto.request.CreateSectorRequest;
 import live.aiotone.monitoring.controller.dto.request.UpdateSectorNameRequest;
-import live.aiotone.monitoring.controller.dto.response.ReadSectorListResponse;
+import live.aiotone.monitoring.controller.dto.response.SectorListResponse;
 import live.aiotone.monitoring.controller.dto.response.SectorOverviewResponse;
 import live.aiotone.monitoring.domain.SectorOverView;
 import live.aiotone.monitoring.service.SectorService;
@@ -38,9 +38,9 @@ public class SectorController {
    * @return Sector 목록
    */
   @GetMapping
-  public CommonResponse<ReadSectorListResponse> readSectorList() {
+  public CommonResponse<SectorListResponse> readSectorList() {
     List<SectorDto> sectorDtoList = sectorMapper.toDtoList(sectorService.readSectorList());
-    ReadSectorListResponse data = ReadSectorListResponse.of(sectorDtoList);
+    SectorListResponse data = SectorListResponse.of(sectorDtoList);
     return CommonResponse.success(data);
   }
 
