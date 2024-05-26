@@ -1,6 +1,7 @@
 package live.aiotone.monitoring.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -8,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import live.aiotone.monitoring.controller.dto.MotorRunningRateDto;
 import live.aiotone.monitoring.controller.dto.mapper.MotorMapper;
@@ -15,6 +17,7 @@ import live.aiotone.monitoring.controller.dto.mapper.MotorMapperImpl;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapper;
 import live.aiotone.monitoring.controller.dto.mapper.SectorMapperImpl;
 import live.aiotone.monitoring.controller.dto.mapper.SensorScoreMapperImpl;
+import live.aiotone.monitoring.controller.dto.response.MotorDetailResponse;
 import live.aiotone.monitoring.domain.Motor;
 import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
 import live.aiotone.monitoring.domain.SensorScore;
@@ -157,6 +160,44 @@ public class MotorControllerTest {
           .andExpect(jsonPath("data.rates[0].rate").value(motorRunningRateDtos.get(0).getRate()))
           .andExpect(jsonPath("data.rates[1].timestamp").value(motorRunningRateDtos.get(1).getTimestamp()))
           .andExpect(jsonPath("data.rates[1].rate").value(motorRunningRateDtos.get(1).getRate()));
+    }
+
+  }
+
+  @Nested
+  class 모터_상세정보_조회 {
+
+    @Test
+    void 모터_상세정보_조회_성공_시_200_및_MotorDetailResponse_응답() throws Exception {
+      // given
+      Long motorId = 1L;
+      MotorDetailResponse.Sensor sensor1 = MotorDetailResponse.Sensor.builder().sensorId(1L).sensorType("type1").build();
+      MotorDetailResponse.Sensor sensor2 = MotorDetailResponse.Sensor.builder().sensorId(2L).sensorType("type2").build();
+      MotorDetailResponse expectedResponse = MotorDetailResponse.builder()
+          .motorId(motorId)
+          .motorName("motor1")
+          .sectorId(1L)
+          .sectorName("sector1")
+          .on(true)
+          .normal(true)
+          .sensors(Arrays.asList(sensor1, sensor2))
+          .build();
+
+      when(motorService.getMotorDetail(motorId)).thenReturn(expectedResponse);
+
+      // when, then
+      mockMvc.perform(get("/api/monitor/motors/" + motorId))
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("data.motorId").value(expectedResponse.getMotorId()))
+          .andExpect(jsonPath("data.motorName").value(expectedResponse.getMotorName()))
+          .andExpect(jsonPath("data.sectorId").value(expectedResponse.getSectorId()))
+          .andExpect(jsonPath("data.sectorName").value(expectedResponse.getSectorName()))
+          .andExpect(jsonPath("data.isOn").value(expectedResponse.isOn()))
+          .andExpect(jsonPath("data.isNormal").value(expectedResponse.isNormal()))
+          .andExpect(jsonPath("data.sensors[0].sensorId").value(sensor1.getSensorId()))
+          .andExpect(jsonPath("data.sensors[0].sensorType").value(sensor1.getSensorType()))
+          .andExpect(jsonPath("data.sensors[1].sensorId").value(sensor2.getSensorId()))
+          .andExpect(jsonPath("data.sensors[1].sensorType").value(sensor2.getSensorType()));
     }
 
   }
