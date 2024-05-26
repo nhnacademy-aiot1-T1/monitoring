@@ -2,15 +2,15 @@ package live.aiotone.monitoring.controller.dto.response;
 
 import java.util.List;
 import live.aiotone.monitoring.controller.dto.MotorDto;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 모터 리스트 조회 응답 DTO.
  */
-@AllArgsConstructor(staticName = "of")
+@RequiredArgsConstructor(staticName = "of")
 @Getter
-public class ReadMotorListResponse {
+public class MotorListResponse {
 
-  List<MotorDto> motors;
+  private final List<MotorDto> motors;
 }
