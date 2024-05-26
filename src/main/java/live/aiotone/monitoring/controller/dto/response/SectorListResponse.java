@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor(staticName = "of")
-public class ReadSectorListResponse {
+public class SectorListResponse {
 
   private final List<SectorDto> sectors;
 
