@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "motor_running_log")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE, onConstructor_ = @QueryProjection)
 @Builder
 public class MotorRunningLog {
