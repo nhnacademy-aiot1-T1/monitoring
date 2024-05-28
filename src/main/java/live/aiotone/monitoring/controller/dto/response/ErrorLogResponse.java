@@ -12,6 +12,9 @@ import lombok.Getter;
 @Getter
 public class ErrorLogResponse {
 
+  private final int total;
+  private final int page;
+  private final int size;
   private final List<ErrorLog> logs;
 
   /**
@@ -19,7 +22,7 @@ public class ErrorLogResponse {
    */
   @Builder
   @Getter
-  private static final class ErrorLog {
+  public static final class ErrorLog {
 
     private final Long motorId;
     private final String motorName;
