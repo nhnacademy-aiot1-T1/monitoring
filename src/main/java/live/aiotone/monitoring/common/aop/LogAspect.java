@@ -22,13 +22,11 @@ import org.springframework.stereotype.Component;
 public class LogAspect {
 
   /**
-   * 스테레오 타입을 가진 빈들을 대상으로 한다.
+   * 스테레오 타입 빈 대상.
    */
-  @Pointcut("within(*..*Controller) || "
-      + "within(@org.springframework.stereotype.Service *) || "
-      + "execution(* org.springframework.data.jpa.repository.JpaRepository+.*(..))")
-  public void stereoTypePointCut() {
-    // 스테레오 타입 포인트 컷
+  @Pointcut("bean(*Controller) || " + "bean(*Service*) ||" + "bean(*Repository)")
+  public void stereoTypePointcut() {
+    // 스테레오 타입 빈 네이밍 규칙으로 지정
   }
 
 
@@ -39,7 +37,7 @@ public class LogAspect {
    * @return Object : 타겟 메서드의 리턴값
    * @throws Throwable : 타겟 메서드의 예외
    */
-  @Around("stereoTypePointCut()")
+  @Around("stereoTypePointcut()")
   public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
     long startTime = System.currentTimeMillis();
     Object result = joinPoint.proceed();
@@ -58,7 +56,7 @@ public class LogAspect {
    *
    * @param joinPoint : 타겟 메서드
    */
-  @Before("stereoTypePointCut()")
+  @Before("stereoTypePointcut()")
   public void logArguments(JoinPoint joinPoint) {
 
     String className = getRealClassName(joinPoint);
@@ -78,7 +76,7 @@ public class LogAspect {
    * @param joinPoint : 타겟 메서드
    * @param result    : 타겟 메서드의 리턴값
    */
-  @AfterReturning(value = "stereoTypePointCut()", returning = "result")
+  @AfterReturning(value = "stereoTypePointcut()", returning = "result")
   public void logReturnValue(JoinPoint joinPoint, Object result) {
     String className = getRealClassName(joinPoint);
     String methodName = joinPoint.getSignature().getName();
