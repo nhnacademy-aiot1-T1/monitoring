@@ -35,7 +35,7 @@ public class Motor {
   private Long id;
 
   @JoinColumn(name = "sector_id")
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   private Sector sector;
 
   @Column(name = "device_name", nullable = false)
