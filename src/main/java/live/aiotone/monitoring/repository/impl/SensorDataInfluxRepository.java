@@ -43,6 +43,4 @@ public class SensorDataInfluxRepository implements SensorDataRepository {
         .timeShift(sensorProperties.getTimeShift(), ChronoUnit.HOURS);
     return influxDb.getQueryApi().query(flux.toString(), SensorData.class);
   }
-
-
 }
