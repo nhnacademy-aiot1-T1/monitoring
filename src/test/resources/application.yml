@@ -20,3 +20,10 @@ spring:
 eureka:
   client:
     enabled: false
+
+influx:
+  url: http:/127.0.0.1
+  username: user
+  password: 11111111
+  org: aiotone
+  bucket: rawData
