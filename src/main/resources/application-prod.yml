@@ -16,3 +16,10 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL}
+
+influx:
+  url: ${INFLUX_URL}
+  username: ${INFLUX_USERNAME}
+  password: ${INFLUX_PASSWORD}
+  org: aiotone
+  bucket: ai
