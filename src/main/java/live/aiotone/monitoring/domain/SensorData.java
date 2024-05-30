@@ -4,6 +4,7 @@ import com.influxdb.annotations.Column;
 import com.influxdb.annotations.Measurement;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import lombok.Builder;
 import lombok.Getter;
 
 /**
@@ -18,6 +19,12 @@ public class SensorData {
 
   @Column(name = "_value")
   private double value;
+
+  @Builder
+  private SensorData(Instant time, double value) {
+    this.time = time;
+    this.value = value;
+  }
 
   /**
    * 센서 데이터 조회를 위한 enum 클래스.
