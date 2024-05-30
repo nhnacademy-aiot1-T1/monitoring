@@ -45,7 +45,7 @@ public class InfluxDbSensorProperties {
   private final Long timeShift;
 
 
-  private InfluxDbSensorProperties(@DefaultValue("rawData") String measurement, @DefaultValue("ai") String bucket,
+  protected InfluxDbSensorProperties(@DefaultValue("rawData") String measurement, @DefaultValue("ai") String bucket,
       @DefaultValue("gateway") String gatewayTagKey,
       @DefaultValue("gateWay1") String gatewayTagValue,
       @DefaultValue("motor") String motorTagKey,
