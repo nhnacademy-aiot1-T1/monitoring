@@ -27,6 +27,10 @@ public class InfluxDbSensorProperties {
    */
   private final String gatewayTagKey;
   /**
+   * 센서 데이터를 조회할 때 사용할 게이트웨이 태그 값.
+   */
+  private final String gatewayTagValue;
+  /**
    * 센서 데이터를 조회할 때 사용할 모터 태그 키.
    */
   private final String motorTagKey;
@@ -43,12 +47,14 @@ public class InfluxDbSensorProperties {
 
   private InfluxDbSensorProperties(@DefaultValue("rawData") String measurement, @DefaultValue("ai") String bucket,
       @DefaultValue("gateway") String gatewayTagKey,
+      @DefaultValue("gateWay1") String gatewayTagValue,
       @DefaultValue("motor") String motorTagKey,
       @DefaultValue("channel") String channelTagKey,
       @DefaultValue("9") Long timeShift) {
     this.measurement = measurement;
     this.bucket = bucket;
     this.gatewayTagKey = gatewayTagKey;
+    this.gatewayTagValue = gatewayTagValue;
     this.motorTagKey = motorTagKey;
     this.channelTagKey = channelTagKey;
     this.timeShift = timeShift;
