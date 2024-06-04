@@ -1,3 +1,5 @@
+### 섹터 요약 조회
+GET http://localhost:8080/api/monitor/sectors/overview
 
 ### 섹터 목록 조회
 GET http://localhost:8080/api/monitor/sectors
@@ -17,9 +19,36 @@ GET http://localhost:8080/api/monitor/overview
 ### 섹터 요약 정보 조회
 GET http://localhost:8080/api/monitor/sectors/overview
 
+### 총 모터 가동률 조회 (일별)
+GET http://localhost:8080/api/monitor/motors/running-rate?duration=DAY
 
-### 총 모터 가동률 조회
-GET http://localhost:8080/api/monitor/motors/running-rate
+### 총 모터 가동률 조회 (주별)
+GET http://localhost:8080/api/monitor/motors/running-rate?duration=week
+
+### 총 모터 가동률 조회 (월별)
+GET http://localhost:8080/api/monitor/motors/running-rate?duration=MONTH
 
 ### 개별 모터 가동률 정보 조회
-GET http://localhost:8080/api/monitor/motors/3/running-rate?duration=MONTH
+GET http://localhost:8080/api/monitor/motors/2393/running-rate?duration=week
+
+### 개별 모터 상세 정보 조회
+GET http://localhost:8080/api/monitor/motors/2
+
+### 이슈 목록 조회
+GET http://localhost:8080/api/monitor/logs/error?score=95
+
+### 모터 디테일
+GET http://localhost:8080/api/monitor/motors/2393
+
+### 모터 센서 데이터 조회
+
+GET http://localhost:8080/api/monitor/motors/2394/sensors/15/data
+
+###
+
+
+
+
+
+
+
