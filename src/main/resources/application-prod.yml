@@ -11,6 +11,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://192.168.0.23:8761/eureka
+    enabled: true
 
 influx:
   url: ${INFLUX_URL}

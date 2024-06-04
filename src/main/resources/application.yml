@@ -2,7 +2,7 @@ spring:
   application:
     name: MONITORING-SERVICE
   profiles:
-    active: local
+    active: prod
   mvc:
     hiddenmethod:
       filter:
