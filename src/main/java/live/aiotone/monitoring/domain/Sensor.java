@@ -34,7 +34,7 @@ public class Sensor {
   @ManyToOne
   private Motor motor;
 
-  @Column(name = "sensor_name", nullable = false)
+  @Column(name = "sensor_type", nullable = false)
   private String sensorName;
 
   @Column(name = "channel_no")

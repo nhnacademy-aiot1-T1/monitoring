@@ -1,18 +1,21 @@
 spring:
-  application:
-    name: monitoring-service
   datasource:
     username: ${MYSQL_USERNAME}
     url: ${MYSQL_URL}
     driverClassName: com.mysql.cj.jdbc.Driver
     password: ${MYSQL_PASSWORD}
-
   jpa:
     open-in-view: false
-    properties:
-      hibernate:
-        globally_quoted_identifiers: true
+
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URL}
+      defaultZone: http://192.168.0.23:8761/eureka
+    enabled: true
+
+influx:
+  url: ${INFLUX_URL}
+  username: ${INFLUX_USERNAME}
+  password: ${INFLUX_PASSWORD}
+  org: aiotone
+  bucket: ai

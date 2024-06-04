@@ -1,4 +1,4 @@
-package live.aiotone.monitoring.repository;
+package live.aiotone.monitoring.repository.impl;
 
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.Expressions;
@@ -11,6 +11,7 @@ import live.aiotone.monitoring.controller.dto.QMotorRunningRateDto;
 import live.aiotone.monitoring.domain.MotorRunningLog;
 import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
 import live.aiotone.monitoring.domain.QMotorRunningLog;
+import live.aiotone.monitoring.repository.MotorRunningLogRepositoryCustom;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 /**

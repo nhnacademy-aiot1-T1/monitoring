@@ -1,5 +1,7 @@
 package live.aiotone.monitoring.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -7,7 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +24,7 @@ import live.aiotone.monitoring.controller.dto.mapper.SensorScoreMapperImpl;
 import live.aiotone.monitoring.controller.dto.response.MotorDetailResponse;
 import live.aiotone.monitoring.domain.Motor;
 import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
+import live.aiotone.monitoring.domain.SensorData;
 import live.aiotone.monitoring.domain.SensorScore;
 import live.aiotone.monitoring.factory.TestFixtureFactory;
 import live.aiotone.monitoring.service.MotorService;
@@ -202,5 +207,26 @@ public class MotorControllerTest {
 
   }
 
+  @Nested
+  class 센서_데이터_조회 {
+
+    @Test
+    void 센서_데이터_조회_성공_시_200_반환() throws Exception {
+      // given
+      Long motorId = 1L;
+      Long sensorId = 1L;
+      List<SensorData> sensorDataList = List.of(SensorData.builder().time(Instant.now()).value(1.0).build());
+      when(sensorService.readSensorData(anyLong(), anyLong(), any())).thenReturn(sensorDataList);
+      // when, then
+      mockMvc.perform(MockMvcRequestBuilders.get(path + "/" + motorId + "/sensors/" + sensorId + "/data"))
+          .andDo(print())
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("status").value("success"))
+          .andExpect(jsonPath("data.sensorData").isArray())
+          .andExpect(jsonPath("data.sensorData[0].time").value(
+              LocalDateTime.ofInstant(sensorDataList.get(0).getTime(), ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))))
+          .andExpect(jsonPath("data.sensorData[0].value").value(sensorDataList.get(0).getValue()));
+    }
+  }
 
 }

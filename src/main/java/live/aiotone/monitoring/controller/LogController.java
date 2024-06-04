@@ -27,7 +27,7 @@ public class LogController {
    * @return 에러 로그 응답
    */
   @GetMapping("/error")
-  public CommonResponse<ErrorLogResponse> readErrorLogs(Pageable pageable, @RequestParam(defaultValue = "80") Double score) {
+  public CommonResponse<ErrorLogResponse> readErrorLogs(Pageable pageable, @RequestParam(defaultValue = "98") Double score) {
     ErrorLogResponse errorLogResponse = logService.readErrorLogs(score, pageable);
     return CommonResponse.success(errorLogResponse);
   }

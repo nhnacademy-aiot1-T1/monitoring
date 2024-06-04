@@ -1,33 +1,53 @@
 package live.aiotone.monitoring.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import live.aiotone.monitoring.base.ServiceTestBase;
 import live.aiotone.monitoring.common.exception.MotorNotFoundException;
+import live.aiotone.monitoring.common.holder.ClockHolder;
+import live.aiotone.monitoring.controller.dto.MotorRunningRateDto;
 import live.aiotone.monitoring.controller.dto.response.MotorDetailResponse;
 import live.aiotone.monitoring.domain.Motor;
+import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
 import live.aiotone.monitoring.domain.Sector;
 import live.aiotone.monitoring.domain.Sensor;
 import live.aiotone.monitoring.factory.TestFixtureFactory;
 import live.aiotone.monitoring.repository.MotorRepository;
+import live.aiotone.monitoring.repository.MotorRunningLogRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 
 @SuppressWarnings("ALL")
 class MotorServiceImplTest extends ServiceTestBase {
 
   @InjectMocks
-  private MotorServiceImpl motorService;
+  MotorServiceImpl motorService;
   @Mock
-  private MotorRepository motorRepository;
+  MotorRepository motorRepository;
+  @Mock
+  MotorRunningLogRepository motorRunningLogRepository;
+
+  @Spy
+  ClockHolder clockHolder = new ClockHolder() {
+    @Override
+    public Clock getClock() {
+      return Clock.fixed(Instant.parse("2000-01-01T00:00:00Z"), ZoneOffset.UTC);
+    }
+  };
 
   @Nested
   class Motor_조회 {
@@ -81,8 +101,40 @@ class MotorServiceImplTest extends ServiceTestBase {
       Long motorId = 1L;
       when(motorRepository.findById(motorId)).thenReturn(Optional.empty());
       // when, then
-      assertThrows(MotorNotFoundException.class, () -> motorService.getMotorDetail(motorId));
+      assertThatThrownBy(() -> motorService.getMotorDetail(motorId))
+          .isInstanceOf(MotorNotFoundException.class);
     }
 
   }
+
+  @Nested
+  class MotorRunningRate_조회 {
+
+    @Test
+    void 모터Id에_해당하는_모터의_모터_가동률을_조회할_때_MotorRunningRateDto를_반환() {
+      // given
+      Long motorId = 1L;
+      when(motorRunningLogRepository.readMotorRunningRateById(anyLong(), any(), any()))
+          .thenReturn(List.of(new MotorRunningRateDto("2021-01-01", 0.1)));
+      // when
+      List<MotorRunningRateDto> runningRateDto = motorService.readMotorRunningRateById(motorId, Duration.DAY);
+      // then
+      assertThat(runningRateDto).isNotNull();
+      verify(motorRunningLogRepository, times(1)).readMotorRunningRateById(anyLong(), any(), any());
+    }
+
+    @Test
+    void 모든_모터의_가동률을_조회() {
+      // given
+      when(motorRunningLogRepository.readMotorRunningRate(any(), any()))
+          .thenReturn(List.of(new MotorRunningRateDto("2021-01-01", 0.1)));
+      // when, then
+      List<MotorRunningRateDto> runningRateDto = motorService.readMotorRunningRate(Duration.DAY);
+
+      assertThat(runningRateDto).isNotNull();
+      verify(motorRunningLogRepository, times(1)).readMotorRunningRate(any(), any());
+    }
+
+  }
+
 }

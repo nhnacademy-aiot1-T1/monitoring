@@ -9,9 +9,11 @@ import live.aiotone.monitoring.controller.dto.mapper.SensorScoreMapper;
 import live.aiotone.monitoring.controller.dto.response.MotorDetailResponse;
 import live.aiotone.monitoring.controller.dto.response.MotorListResponse;
 import live.aiotone.monitoring.controller.dto.response.MotorRunningRateResponse;
+import live.aiotone.monitoring.controller.dto.response.SensorDataResponse;
 import live.aiotone.monitoring.controller.dto.response.SensorScoresResponse;
 import live.aiotone.monitoring.controller.dto.response.SensorScoresResponse.SensorScoreDto;
 import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
+import live.aiotone.monitoring.domain.SensorData;
 import live.aiotone.monitoring.domain.SensorScore;
 import live.aiotone.monitoring.service.MotorService;
 import live.aiotone.monitoring.service.SensorService;
@@ -106,6 +108,29 @@ public class MotorController {
         .build());
   }
 
+  /**
+   * 센서 데이터 조회 요청 핸들러.
+   *
+   * @param motorId  모터 아이디
+   * @param sensorId 센서 아이디
+   * @param duration 조회 기간
+   * @return 센서 데이터 조회 응답
+   */
+  @GetMapping("/{motorId}/sensors/{sensorId}/data")
+  public CommonResponse<SensorDataResponse> readSensorData(@PathVariable Long motorId,
+      @PathVariable Long sensorId,
+      @RequestParam(required = false, defaultValue = "DAY") SensorData.Duration duration) {
+    List<SensorData> sensorDataDtoList = sensorService.readSensorData(motorId, sensorId, duration);
+    return CommonResponse.success(SensorDataResponse.from(sensorDataDtoList));
+  }
+
+
+  /**
+   * 모터 상세 조회 요청 핸들러.
+   *
+   * @param motorId 모터 아이디
+   * @return 모터 상세 조회 응답
+   */
   @GetMapping("/{motorId}")
   public CommonResponse<MotorDetailResponse> readMotorDetail(@PathVariable Long motorId) {
     MotorDetailResponse motorDetail = motorService.getMotorDetail(motorId);
