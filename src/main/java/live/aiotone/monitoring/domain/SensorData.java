@@ -6,11 +6,13 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 센서 데이터 도메인 클래스.
  */
 @Getter
+@NoArgsConstructor
 @Measurement(name = "rawData")
 public class SensorData {
 
