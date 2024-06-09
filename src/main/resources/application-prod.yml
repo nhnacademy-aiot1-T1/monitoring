@@ -1,9 +1,9 @@
 spring:
   datasource:
-    username: ${MYSQL_USERNAME}
-    url: ${MYSQL_URL}
+    username:
+    url:
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: ${MYSQL_PASSWORD}
+    password:
   jpa:
     open-in-view: false
 
@@ -14,8 +14,7 @@ eureka:
     enabled: true
 
 influx:
-  url: ${INFLUX_URL}
-  username: ${INFLUX_USERNAME}
-  password: ${INFLUX_PASSWORD}
+  url:
   org: aiotone
   bucket: ai
+  token:

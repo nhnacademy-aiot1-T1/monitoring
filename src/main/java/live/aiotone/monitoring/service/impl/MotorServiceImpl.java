@@ -13,6 +13,11 @@ import live.aiotone.monitoring.repository.MotorRepository;
 import live.aiotone.monitoring.repository.MotorRunningLogRepository;
 import live.aiotone.monitoring.service.MotorService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
  * MotorService 구현체.
  */
 @Service
+@Slf4j
 @Transactional(readOnly = true)
+@EnableCaching
 @RequiredArgsConstructor
 public class MotorServiceImpl implements MotorService {
 
@@ -34,6 +41,7 @@ public class MotorServiceImpl implements MotorService {
   }
 
   @Override
+  @Cacheable("motorRunningRate")
   public List<MotorRunningRateDto> readMotorRunningRate(Duration duration) {
     LocalDateTime currentTime = LocalDateTime.now(clockHolder.getClock());
     return motorRunningLogRepository.readMotorRunningRate(currentTime, duration);
@@ -68,6 +76,14 @@ public class MotorServiceImpl implements MotorService {
         .sensors(sensors)
         .build();
   }
+
+  @CacheEvict(value = "motorRunningRate", allEntries = true)
+  @Scheduled(cron = "0 0 0 * * ?")
+  public void evictAllCacheValues() {
+    log.info("가동률 캐시 삭제");
+  }
+
+
 }
 
 
