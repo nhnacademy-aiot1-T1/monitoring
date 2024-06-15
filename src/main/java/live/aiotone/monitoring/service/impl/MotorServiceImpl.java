@@ -4,13 +4,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import live.aiotone.monitoring.common.exception.MotorNotFoundException;
+import live.aiotone.monitoring.common.exception.sector.SectorNotFoundException;
 import live.aiotone.monitoring.common.holder.ClockHolder;
 import live.aiotone.monitoring.controller.dto.MotorRunningRateDto;
 import live.aiotone.monitoring.controller.dto.response.MotorDetailResponse;
 import live.aiotone.monitoring.domain.Motor;
 import live.aiotone.monitoring.domain.MotorRunningLog.Duration;
+import live.aiotone.monitoring.domain.Sector;
 import live.aiotone.monitoring.repository.MotorRepository;
 import live.aiotone.monitoring.repository.MotorRunningLogRepository;
+import live.aiotone.monitoring.repository.SectorRepository;
 import live.aiotone.monitoring.service.MotorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableCaching
 @RequiredArgsConstructor
 public class MotorServiceImpl implements MotorService {
+
+  private final SectorRepository sectorRepository;
 
   private final MotorRepository motorRepository;
   private final MotorRunningLogRepository motorRunningLogRepository;
@@ -51,6 +56,14 @@ public class MotorServiceImpl implements MotorService {
   public List<MotorRunningRateDto> readMotorRunningRateById(Long motorId, Duration duration) {
     LocalDateTime currentTime = LocalDateTime.now(clockHolder.getClock());
     return motorRunningLogRepository.readMotorRunningRateById(motorId, currentTime, duration);
+  }
+
+  @Override
+  @Transactional
+  public void updateMotorSector(Long motorId, Long sectorId) {
+    Sector updateSector = sectorRepository.findById(sectorId).orElseThrow(() -> new SectorNotFoundException(sectorId));
+    Motor motor = motorRepository.findById(motorId).orElseThrow(() -> new MotorNotFoundException(motorId));
+    motor.updateSector(updateSector);
   }
 
   @Override

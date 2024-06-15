@@ -22,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -135,5 +136,11 @@ public class MotorController {
   public CommonResponse<MotorDetailResponse> readMotorDetail(@PathVariable Long motorId) {
     MotorDetailResponse motorDetail = motorService.getMotorDetail(motorId);
     return CommonResponse.success(motorDetail);
+  }
+
+  @PutMapping("/{motorId}/sectors/{sectorId}")
+  public CommonResponse<Void> updateMotorSector(@PathVariable Long motorId, @PathVariable Long sectorId) {
+    motorService.updateMotorSector(motorId, sectorId);
+    return CommonResponse.success(null);
   }
 }

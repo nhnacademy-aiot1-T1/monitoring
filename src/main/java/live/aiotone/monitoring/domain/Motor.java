@@ -53,4 +53,7 @@ public class Motor {
   @OneToMany(mappedBy = "motor")
   private List<Sensor> sensors;
 
+  public void updateSector(Sector updateSector) {
+    this.sector = updateSector;
+  }
 }
