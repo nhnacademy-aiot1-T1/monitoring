@@ -35,5 +35,14 @@ public interface MotorService {
    */
   List<MotorRunningRateDto> readMotorRunningRateById(Long motorId, Duration duration);
 
+
+  /**
+   * 모터의 섹터 수정.
+   *
+   * @param motorId 모터 아이디
+   * @param sectorId 섹터 아이디
+   */
+  void updateMotorSector(Long motorId, Long sectorId);
+
   MotorDetailResponse getMotorDetail(Long motorId);
 }
