@@ -46,7 +46,7 @@ public class MotorServiceImpl implements MotorService {
   }
 
   @Override
-  @Cacheable("motorRunningRate")
+  @Cacheable(value = "motorRunningRate", condition = "#duration != #duration.DAY")
   public List<MotorRunningRateDto> readMotorRunningRate(Duration duration) {
     LocalDateTime currentTime = LocalDateTime.now(clockHolder.getClock());
     return motorRunningLogRepository.readMotorRunningRate(currentTime, duration);
