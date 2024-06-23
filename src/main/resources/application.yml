@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: MONITORING-SERVICE
+  profiles:
+    active: prod
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

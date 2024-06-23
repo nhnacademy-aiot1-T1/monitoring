@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    username:
+    url:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password:
+  jpa:
+    open-in-view: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.0.27:8761/eureka
+    enabled: true
+
+influx:
+  url:
+  org: aiotone
+  bucket: preprocessing
+  token:
