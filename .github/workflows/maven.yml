@@ -3,7 +3,6 @@ name: Java CI/CD with Maven
 on:
   push:
     branches: [ "main", "develop" ]
-  pull_request:
 
 jobs:
   build-and-deploy:
