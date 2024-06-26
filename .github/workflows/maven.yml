@@ -55,4 +55,4 @@ jobs:
             docker pull "${{ secrets.DOCKER_USERNAME }}"/monitoring
             docker stop monitoring || true
             docker rm monitoring || true 
-            docker run -d --name monitoring "${{ secrets.DOCKER_USERNAME }}"/monitoring
+            docker run -d --name --network t1bridge monitoring "${{ secrets.DOCKER_USERNAME }}"/monitoring
